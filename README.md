@@ -223,3 +223,42 @@ const useQueryUserInfo = () => {
 # 开始任务
 
 请开始分析并提出你的初步想法和需要讨论的问题。
+
+
+
+
+
+
+
+我需要澄清项目需求，因为当前实现方向有误。
+
+**当前问题：**
+现在的实现只是一个工具库/框架，API 接口仍然需要在业务项目中定义后才能使用。这完全不符合我的预期。
+
+**我的真实需求：**
+我需要的是一个**完整的业务 API Hooks 库**，具体要求如下：
+
+1. **API 定义应该在本库中完成**：所有业务 API 接口（endpoints、请求参数、响应类型等）都应该在这个库内部定义好
+2. **开箱即用**：业务项目只需要安装并导入这个库，就能直接使用已经封装好的 API hooks，无需再定义任何 API 接口
+3. **完整的业务逻辑**：库中应该包含具体的业务 API hooks（例如：`useUserLogin`、`useGetUserInfo`、`useProductList` 等），而不仅仅是通用的工具函数
+
+**期望的使用方式：**
+```typescript
+// 在业务项目中
+import { useUserLogin, useGetUserInfo } from 'api-hooks-demo'
+
+function MyComponent() {
+  const { data, loading, error } = useGetUserInfo()
+  // 直接使用，无需定义 API
+}
+```
+
+**不期望的使用方式（当前错误实现）：**
+```typescript
+// 在业务项目中还需要定义 API
+import { createApiHook } from 'api-hooks-demo'
+
+const useGetUserInfo = createApiHook('/api/user') // ❌ 不应该在业务项目中定义
+```
+
+请重新设计和实现这个库，使其成为一个包含完整业务 API 定义的 hooks 库，而不是一个需要二次开发的工具库。
